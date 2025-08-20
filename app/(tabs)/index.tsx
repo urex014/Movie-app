@@ -29,9 +29,10 @@ export default function Index() {
   return (
     <View className="flex-1  bg-primary">
       <ScrollView className="flex-1 px-5" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10, minHeight: '100%' }}
-      
-      
-      >
+      horizontal={false}
+      alwaysBounceVertical={true}
+      //@ts-ignore
+      refreshControl={refreshing ? { refreshing, onRefresh } : undefined}>
       <Image source={images.bg} className="absolute w-full z-0" />
 
       {/* Logo stays above list */}
@@ -50,8 +51,13 @@ export default function Index() {
           }}
           className="mt-2 pb-32"
           contentContainerStyle={{ paddingBottom: 10 }}
-          refreshing={refreshing}
-          onRefresh={onRefresh}
+          ListHeaderComponent={() => (
+            <View className="px-5 mt-5">
+              <View className="w-full h-12 rounded-lg mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.06)' }} />
+              <View className="h-10 rounded w-2/3 mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
+              <View className="h-4 rounded w-1/4" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
+            </View>
+          )}
         />
       ) : moviesError ? (
         <Text className="px-5">Error: {moviesError?.message}</Text>
@@ -61,6 +67,7 @@ export default function Index() {
           renderItem={({ item }) => (
             // <Text className="text-sm text-white">{item.title}</Text>
             <MovieCard {...item} />
+            // <Loading />
           )}
           keyExtractor={(item, index) => (item?.id ? String(item.id) : String(index))}
           numColumns={3}
