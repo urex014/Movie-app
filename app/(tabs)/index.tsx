@@ -1,13 +1,12 @@
 import Loading from "@/components/Loading";
 import MovieCard from "@/components/MovieCard";
-import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
 import { useCallback, useState } from 'react';
-import { FlatList, Image, ScrollView, Text, View } from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, Vibration, View } from "react-native";
 
 
 
@@ -28,11 +27,7 @@ export default function Index() {
   }, [refetch]);
   return (
     <View className="flex-1  bg-primary">
-      <ScrollView className="flex-1 px-5" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10, minHeight: '100%' }}
-      horizontal={false}
-      alwaysBounceVertical={true}
-      //@ts-ignore
-      refreshControl={refreshing ? { refreshing, onRefresh } : undefined}>
+      <View className="flex-1 px-5"  >
       <Image source={images.bg} className="absolute w-full z-0" />
 
       {/* Logo stays above list */}
@@ -81,7 +76,10 @@ export default function Index() {
           contentContainerStyle={{ paddingBottom: 10 }}
           ListHeaderComponent={() => (
             <View className="px-5 mt-5">
-              <SearchBar placeholder="search for a movie" onPress={() => { router.push('/search'); }} />
+              <TouchableOpacity className="text-accentText px-6 py-4 rounded-lg w-100 flex-1 justify-center items-center bg-[rgb(225,225,225,0.6)] hover:bg-primary backdrop-blur-md" onPress={()=> {router.push('/search')
+                Vibration.vibrate(50)
+
+              }}><Text className="text-accentText">Search for your favorite movies </Text></TouchableOpacity>
               <Text className="text-3xl text-white font-bold mt-5 mb-3">Latest Movies</Text>
               </View>
             )}
@@ -89,7 +87,7 @@ export default function Index() {
             onRefresh={onRefresh}
         />
       )}
-    </ScrollView>
+    </View>
     </View>
   );
 }

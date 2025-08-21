@@ -1,9 +1,8 @@
-import { View, Text, ImageBackground } from 'react-native'
-import { Image } from 'react-native'
-import React from 'react'
-import { Tabs } from 'expo-router'
-import { images } from '@/constants/images'
 import { icons } from '@/constants/icons'
+import { images } from '@/constants/images'
+import { Tabs } from 'expo-router'
+import React from 'react'
+import { Image, ImageBackground, Text, Vibration, View } from 'react-native'
 function TabIcon({focused, icon, title}:any){
   if(focused){
   return(
@@ -23,12 +22,16 @@ function TabIcon({focused, icon, title}:any){
 const _layout = () => {
   return (
     <Tabs
+      screenListeners={{
+        tabPress:()=>{Vibration.vibrate(30)}
+      }}
       screenOptions={{
         tabBarShowLabel:false,
         tabBarItemStyle:{
           width: '100%',
           justifyContent:'center',
           alignItems:'center'
+          
         },
         tabBarStyle:{
           backgroundColor: '#0f0D23',
